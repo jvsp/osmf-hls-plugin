@@ -264,14 +264,6 @@
 				} // switch
 			} // while
 			
-			/*
-			var text:String = new String();
-			for(var i:int = 0; i<tagData.length; i++)
-				text += uint(tagData[i]).toString(16)+" ";
-				
-			trace(text);
-			//*/
-			
 			tagData.position = 0;
 			
 			return tagData;
