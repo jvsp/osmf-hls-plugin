@@ -1,6 +1,6 @@
 /*
  * Copyright
- * Watchtower stream.jw.org Team
+ * hangulee@gmail.com
  * 
  */
  
