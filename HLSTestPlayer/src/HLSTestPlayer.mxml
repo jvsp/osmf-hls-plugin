@@ -112,10 +112,10 @@
 				
 				factory.addEventListener(MediaFactoryEvent.PLUGIN_LOAD, onPluginLoaded);
 				factory.addEventListener(MediaFactoryEvent.PLUGIN_LOAD_ERROR, onPluginLoadError);
-				factory.loadPlugin(new URLResource("file:///F:/Streaming/osmf-hls-plugin/release/HLSDynamicPlugin.swf"));
+				//factory.loadPlugin(new URLResource("file:///F:/Streaming/osmf-hls-plugin/release/HLSDynamicPlugin.swf"));
 				//factory.loadPlugin(new URLResource("file:///F:/Streaming/example_osmf_player/bin/AkamaiAdvancedStreamingPlugin.swf"));
 				//factory.loadPlugin(new URLResource("file:///F:/Streaming/example_osmf_player/bin/HLSDynamicPlugin.swf"));
-				//factory.loadPlugin(new PluginInfoResource(new HLSPluginInfo()));
+				factory.loadPlugin(new PluginInfoResource(new HLSPluginInfo()));
 				
 				// player
 				player = new MediaPlayer();
@@ -487,7 +487,9 @@
 					return null;
 				}
 				
-				var streamingURLResource:StreamingURLResource = getResourceFromParentOfType(media, StreamingURLResource) as StreamingURLResource;			
+				var streamingURLResource:StreamingURLResource = getResourceFromParentOfType(media, StreamingURLResource) as StreamingURLResource;
+				
+				trace( "---> " + flash.utils.getQualifiedClassName( streamingURLResource ) );
 				
 				if (streamingURLResource != null)
 				{
@@ -509,9 +511,11 @@
 				trace("----------");
 				trace("* BufferTime: " + player.bufferTime);
 				trace("* bufferLength: " + player.bufferLength);
-				trace("* NS BufferTime: " + stream.bufferTime);
-				trace("* NS bufferLength: " + stream.bufferLength);
-				trace("* Current State? " + player.state + ", " + listResources.selectedItem["data"]);
+				//trace("* NS BufferTime: " + stream.bufferTime);
+				//trace("* NS bufferLength: " + stream.bufferLength);
+				//trace("* Current State? " + player.state + ", " + listResources.selectedItem["data"]);
+				trace("* StreamType: " + getStreamType());
+				
 				//stream.maxPauseBufferTime = 1000;
 				//b.bufferTime = 350;
 				
@@ -558,10 +562,7 @@
 			protected var urls:ArrayCollection = null;
 			private static const URLS:Array = 
 				[
-					{
-						label:"Test1",
-						data:"http://www.codecomposer.net/hls/playlist.m3u8"
-					}
+					
 				];
 
 		]]>
