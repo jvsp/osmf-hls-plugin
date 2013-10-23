@@ -32,6 +32,8 @@ package org.denivip.osmf.net.httpstreaming.hls
 	import org.osmf.events.HTTPStreamingEvent;
 	import org.osmf.events.HTTPStreamingIndexHandlerEvent;
 	import org.osmf.media.MediaResourceBase;
+	import org.osmf.net.StreamingURLResource;
+	import org.osmf.net.StreamType;
 	import org.osmf.net.httpstreaming.HTTPStreamDownloader;
 	import org.osmf.net.httpstreaming.HTTPStreamHandlerQoSInfo;
 	import org.osmf.net.httpstreaming.HTTPStreamRequest;
@@ -706,7 +708,9 @@ package org.denivip.osmf.net.httpstreaming.hls
 			_isReady = true;
 			_isLive = event.live;
 			_offset = event.offset;
-
+			
+			(_resource as StreamingURLResource).streamType = _isLive ? StreamType.DVR : StreamType.RECORDED;
+			
 			CONFIG::LOGGING
 			{			
 				logger.debug("Stream [ " + loggedStreamName + " ] refreshed. ( offset = " + _offset + ", live = " + _isLive + ").");
