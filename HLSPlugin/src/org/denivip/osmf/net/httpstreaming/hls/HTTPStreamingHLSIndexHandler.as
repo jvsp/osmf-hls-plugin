@@ -389,7 +389,9 @@
 		private function notifyTotalDuration(duration:Number, live:Boolean):void{
 			var sdo:FLVTagScriptDataObject = new FLVTagScriptDataObject();
 			var metaInfo:Object = new Object();
-            metaInfo.duration = live ? 0 : duration;
+            //metaInfo.duration = live ? 0 : duration;
+			//I don't know why it should be zero when live stream.
+			metaInfo.duration = duration;
 			
 			sdo.objects = ["onMetaData", metaInfo];
 			dispatchEvent(
