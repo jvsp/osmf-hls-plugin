@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 /**
  * Written By Lee,Han-gil at 2013-10-30
+=======
+/*
+ * Copyright
+ * hangulee@gmail.com
+ * 
+>>>>>>> upstream/master
  */
 package org.denivip.osmf.net.httpstreaming.hls
 {
