@@ -1,10 +1,7 @@
-/*
- * Copyright
- * hangulee@gmail.com
- * 
+/**
+ * Written By Lee,Han-gil at 2013-10-30
  */
- 
- package org.denivip.osmf.net.httpstreaming.hls
+package org.denivip.osmf.net.httpstreaming.hls
 {
 	import __AS3__.vec.Vector;
 	

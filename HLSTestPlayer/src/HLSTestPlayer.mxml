@@ -562,7 +562,18 @@
 			protected var urls:ArrayCollection = null;
 			private static const URLS:Array = 
 				[
-					
+					{
+						label:"Live",
+						data:"http://wtbtshdflash-f.akamaihd.net/i/v6M1rXC5USmroAbDtM0ySRcZ88IL4lLA9eW8CLlsqXX2EzQdxHcmhxONWj0dIMULNFXpFKta_lCP8wNRFF@86526/master.m3u8"
+					},
+					{
+						label:"Special Convention",
+						data:"http://wtbtshdflash-f.akamaihd.net/i/xw66zx6RJSsqe7XjWCGGad3vfpSIXiJas23Kk5lci9Sbis19dEJVAIihmJVfcT4yrfPlvGDW_Y1P4ee4Id@86526/master.m3u8"
+					},
+					{
+						label:"PRODIGAL SON",
+						data:"http://wtbtshdflash-f.akamaihd.net/i/tOM47eUm4ETmRbCsLnpCeYT62jJJNuQpG6r9Q754Iw3r3ykPCYq8IuXV1cMBOfDgJMeKbM9Y_5DpKNsYwU@86526/master.m3u8"
+					},
 				];
 
 		]]>
