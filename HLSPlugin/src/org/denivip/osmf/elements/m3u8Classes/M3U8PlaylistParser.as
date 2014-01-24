@@ -1,5 +1,10 @@
 package org.denivip.osmf.elements.m3u8Classes
 {
+	import flash.events.Event;
+	import flash.net.URLLoader; 
+    import flash.net.URLRequest; 
+	import flash.net.URLLoaderDataFormat;
+	
 	import flash.events.EventDispatcher;
 	
 	import org.denivip.osmf.net.HLSDynamicStreamingResource;
@@ -46,7 +51,6 @@ package org.denivip.osmf.elements.m3u8Classes
 				}
 			}
 			
-			var result:MediaResourceBase;
 			var isLive:Boolean = true;
 			var streamItems:Vector.<DynamicStreamingItem>;
 			var tempStreamingRes:StreamingURLResource = null;
@@ -160,12 +164,23 @@ package org.denivip.osmf.elements.m3u8Classes
 				(result as StreamingURLResource).alternativeAudioStreamItems = alternateStreams;
 			}
 			
-			if(result is StreamingURLResource && StreamingURLResource(result).streamType == StreamType.DVR){
-				var dvrMetadata:Metadata = new Metadata();
-				result.addMetadataValue(MetadataNamespaces.DVR_METADATA, dvrMetadata);
+			if (streamItems.length >= 1) {
+				var request:URLRequest = new URLRequest();
+				request.url =  streamItems[0].streamName;
+				
+				var loader:URLLoader = new URLLoader();
+				loader.dataFormat = URLLoaderDataFormat.TEXT;
+				loader.addEventListener(Event.COMPLETE, onCcompleteLoadHLSPlaylist); 
+				
+				try {
+					loader.load(request);
+				} catch (error:Error) {
+					logger.warn("Unable to load HLS Meta Playlist URL");
+					dispatchEvent(new ParseEvent(ParseEvent.PARSE_COMPLETE, false, false, result));
+				}
+			} else {
+				dispatchEvent(new ParseEvent(ParseEvent.PARSE_COMPLETE, false, false, result));
 			}
-			
-			dispatchEvent(new ParseEvent(ParseEvent.PARSE_COMPLETE, false, false, result));
 		}
 		/*
 		private function addDVRInfo():void{
@@ -183,6 +198,34 @@ package org.denivip.osmf.elements.m3u8Classes
 			// attach info into playlist
 		}
 		*/
+		
+		private function onCcompleteLoadHLSPlaylist(event:Event):void {
+			var loader:URLLoader = URLLoader(event.target);
+			var lines:Array = loader.data.split(/\r?\n/);
+			
+			if (lines[0] != '#EXTM3U') { return; }
+			
+			var isLive:Boolean = true;
+			
+			for (var i:int = 1; i < lines.length; i++) {
+				if(String(lines[i]).indexOf('#EXT-X-ENDLIST') == 0){
+					isLive = false;
+					break;
+				}
+			}
+			
+			(result as StreamingURLResource).streamType = isLive ? StreamType.DVR : StreamType.RECORDED;
+			
+			if(result is StreamingURLResource && StreamingURLResource(result).streamType == StreamType.DVR){
+				var dvrMetadata:Metadata = new Metadata();
+				result.addMetadataValue(MetadataNamespaces.DVR_METADATA, dvrMetadata);
+			}
+			
+			dispatchEvent(new ParseEvent(ParseEvent.PARSE_COMPLETE, false, false, result));
+		}
+		
+		private var result:MediaResourceBase;
+		
 		CONFIG::LOGGING
 		{
 			private var logger:Logger = Log.getLogger("org.denivip.osmf.elements.m3u8Classes.M3U8PlaylistParser");

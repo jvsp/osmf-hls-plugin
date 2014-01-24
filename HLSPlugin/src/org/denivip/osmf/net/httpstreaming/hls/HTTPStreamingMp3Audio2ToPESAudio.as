@@ -1,12 +1,5 @@
-<<<<<<< HEAD
 /**
  * Written By Lee,Han-gil at 2013-10-30
-=======
-/*
- * Copyright
- * hangulee@gmail.com
- * 
->>>>>>> upstream/master
  */
 package org.denivip.osmf.net.httpstreaming.hls
 {
@@ -106,7 +99,9 @@ package org.denivip.osmf.net.httpstreaming.hls
 				
 				value = packet.readUnsignedInt();
 				packet.position -= 4;
-				if(packet.readUnsignedInt() != 0x1c0)
+				
+				var startCode:uint =  packet.readUnsignedInt();
+				if(startCode < 0x1C0 || startCode > 0x1DF && startCode != 0x1bd)
 				{
 						throw new Error("PES start code not found or not ~");
 				}
